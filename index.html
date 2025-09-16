@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <title>Atenció! Exemple de Phishing Educatiu</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #fdfdfd;
+    }
+    header {
+      background-color: #ffdddd;
+      padding: 15px;
+      border: 2px solid red;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    h1 {
+      margin: 0;
+      color: red;
+    }
+    section {
+      margin-bottom: 30px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #fff;
+    }
+    h2 {
+      color: #333;
+    }
+    .simulator, .quiz, .checklist {
+      margin-top: 10px;
+    }
+    button {
+      padding: 10px 15px;
+      margin-top: 10px;
+      background-color: #0066cc;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #004c99;
+    }
+    footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #555;
+    }
+    #counter {
+      font-weight: bold;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>⚠️ Compte! Podries haver caigut en un Phishing</h1>
+    <p>Aquesta pàgina és només una <strong>simulació educativa</strong> per al nostre Treball de Recerca. 
+       No s’han recollit dades personals ni credencials.</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>Com funciona el phishing?</h2>
+      <p>El <em>phishing</em> és una tècnica de ciberdelinqüència que intenta enganyar-te perquè 
+         comparteixis dades sensibles (com contrasenyes o números de targeta). S’utilitzen 
+         webs falses que imiten serveis reals.</p>
+    </section>
+
+    <section class="simulator">
+      <h2>🔍 Simulador: Identifica una URL sospitosa</h2>
+      <p>Introdueix una adreça web i et diré si podria ser sospitosa.</p>
+      <input type="text" id="urlInput" placeholder="Escriu una URL...">
+      <button onclick="checkURL()">Comprovar</button>
+      <p id="urlResult"></p>
+    </section>
+
+    <section class="quiz">
+      <h2>📝 Mini-quiz: Com protegir-te?</h2>
+      <p><strong>Pregunta:</strong> Què has de fer si reps un correu sospitós que et demana fer clic en un enllaç?</p>
+      <button onclick="quizAnswer(true)">No clicar i verificar la font</button>
+      <button onclick="quizAnswer(false)">Clicar i posar les dades ràpidament</button>
+      <p id="quizResult"></p>
+    </section>
+
+    <section class="checklist">
+      <h2>✅ Pautes per no caure en el phishing</h2>
+      <ul>
+        <li>Revisa bé l’adreça web (URL).</li>
+        <li>No facis clic en enllaços sospitosos.</li>
+        <li>No comparteixis contrasenyes per correu electrònic.</li>
+        <li>Assegura’t que la pàgina tingui <strong>https://</strong>.</li>
+        <li>Activa la verificació en dos passos sempre que puguis.</li>
+      </ul>
+      <button onclick="window.print()">Imprimir checklist</button>
+    </section>
+
+    <section class="counter">
+      <h2>📊 Comptador de visites</h2>
+      <p>Aquesta pàgina ha estat visitada <span id="counter">...</span> vegades.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Autor: Arnau i David — Projecte TR</p>
+    <p><em>Privacitat:</em> Aquesta web és pedagògica. No es guarden dades personals. 
+       El comptador només mostra un número total de visites gràcies a <a href="https://countapi.xyz" target="_blank">CountAPI</a>.</p>
+  </footer>
+
+  <script>
+    // Simulador d'URL sospitosa
+    function checkURL() {
+      const url = document.getElementById('urlInput').value;
+      const result = document.getElementById('urlResult');
+      if (url.includes('login') || url.includes('secure') || url.includes('.ru') || url.includes('@')) {
+        result.textContent = "⚠️ Aquesta URL sembla sospitosa!";
+        result.style.color = "red";
+      } else {
+        result.textContent = "✅ Aquesta URL sembla més segura, però sempre vigila.";
+        result.style.color = "green";
+      }
+    }
+
+    // Mini quiz
+    function quizAnswer(correct) {
+      const result = document.getElementById('quizResult');
+      if (correct) {
+        result.textContent = "✅ Correcte! Mai cliquis en enllaços sospitosos.";
+        result.style.color = "green";
+      } else {
+        result.textContent = "❌ Incorrecte! Això podria ser phishing.";
+        result.style.color = "red";
+      }
+    }
+
+    // Comptador amb CountAPI
+    const NAMESPACE = 'TR-Arnau-David';
+    const KEY = 'Comptador-Web-TR';
+
+    async function updateCounter() {
+      const response = await fetch(`https://api.countapi.xyz/hit/${encodeURIComponent(NAMESPACE)}/${encodeURIComponent(KEY)}`);
+      const data = await response.json();
+      document.getElementById('counter').textContent = data.value;
+    }
+
+    updateCounter();
+  </script>
+</body>
+</html>
